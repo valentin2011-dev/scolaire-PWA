@@ -1,0 +1,263 @@
+<!DOCTYPE html>
+<html lang="fr" data-theme="dark">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover, maximum-scale=1">
+<title>Scolaire</title>
+<meta name="description" content="Application personnelle de suivi scolaire — devoirs, emploi du temps, évaluations.">
+<meta name="theme-color" content="#14151a" media="(prefers-color-scheme: dark)">
+<meta name="theme-color" content="#eef0f3" media="(prefers-color-scheme: light)">
+<link rel="manifest" href="manifest.json">
+<link rel="icon" href="assets/icons/favicon-32.png">
+<link rel="apple-touch-icon" href="assets/icons/apple-touch-icon.png">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="Scolaire">
+<link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+<div id="app">
+
+  <!-- ============================================================
+       MENU 1 — Accueil / Devoirs
+       ============================================================ -->
+  <section class="screen active" id="screen-home">
+    <div class="topbar">
+      <div class="brand-mark tappable" data-action="logo-home" aria-label="Accueil">
+        <img src="assets/icons/logo.png" alt="Logo">
+      </div>
+      <div class="greeting-card">
+        <div class="hello" id="home-hello">Bonjour Valentin !</div>
+        <div class="date-text" id="home-date">—</div>
+      </div>
+    </div>
+
+    <div class="mode-banner" id="next-week-mode-banner" style="display:none;">
+      <span class="dot"></span>
+      <span data-i18n="next_week_mode_on"></span>
+    </div>
+
+    <div class="progress-card">
+      <div class="row">
+        <span class="label" id="progress-label"></span>
+        <span class="value" id="progress-value">0%</span>
+      </div>
+      <div class="progress-track">
+        <div class="progress-fill" id="progress-fill"></div>
+      </div>
+    </div>
+
+    <div class="eyebrow" data-i18n="homework_of_week"></div>
+    <div id="days-list"></div>
+
+    <div class="next-week-banner" id="next-week-banner" data-action="toggle-week">
+      <div>
+        <div class="t" id="next-week-title"></div>
+        <div class="s" id="next-week-sub"></div>
+      </div>
+      <div class="chev">›</div>
+    </div>
+  </section>
+
+  <!-- ============================================================
+       MENU 2 — Emploi du temps
+       ============================================================ -->
+  <section class="screen no-nav" id="screen-schedule">
+    <div class="topbar">
+      <div class="brand-mark tappable" data-action="logo-home" aria-label="Accueil">
+        <img src="assets/icons/logo.png" alt="Logo">
+      </div>
+      <div class="page-title" style="margin:0;" data-i18n="schedule_title"></div>
+    </div>
+
+    <div class="eyebrow" data-i18n="timetable"></div>
+    <div class="pill-row">
+      <div class="pill compact" data-i18n="week_a"></div>
+      <div class="pill-side tappable" data-action="photo-week" data-week="A" id="photo-btn-A"></div>
+    </div>
+    <div class="pill-row">
+      <div class="pill compact" data-i18n="week_b"></div>
+      <div class="pill-side tappable" data-action="photo-week" data-week="B" id="photo-btn-B"></div>
+    </div>
+    <input type="file" id="photo-input" accept="image/*" style="display:none;">
+
+    <div class="eyebrow" data-i18n="thrive_title"></div>
+    <div class="thrive-card">
+      <div class="thrive-title" data-i18n="thrive_sub"></div>
+      <div id="thrive-list"></div>
+    </div>
+    <button class="add-btn big" data-action="add-thrive" aria-label="Ajouter une activité">+</button>
+
+    <div class="eyebrow" data-i18n="evaluations_title"></div>
+    <div class="progress-card eval-summary" style="margin-bottom:12px;">
+      <span class="label" data-i18n="general_average"></span>
+      <span class="eval-avg-value" id="eval-average">—</span>
+    </div>
+    <div id="eval-list"></div>
+    <button class="see-all-link" data-action="see-all-evals" data-i18n="see_all_evals"></button>
+    <button class="add-btn big" data-action="add-eval" aria-label="Ajouter une évaluation">+</button>
+  </section>
+
+  <!-- ============================================================
+       MENU 3 — Réglages
+       ============================================================ -->
+  <section class="screen" id="screen-settings">
+    <div class="topbar">
+      <div class="brand-mark tappable" data-action="logo-home" aria-label="Accueil">
+        <img src="assets/icons/logo.png" alt="Logo">
+      </div>
+      <div class="page-title" style="margin:0;" data-i18n="settings_title"></div>
+    </div>
+
+    <div class="eyebrow" data-i18n="personal_notes"></div>
+    <div class="notes-grid" id="notes-grid"></div>
+
+    <div class="eyebrow" data-i18n="appearance"></div>
+    <div class="settings-card">
+      <div class="settings-row">
+        <span class="label" data-i18n="theme"></span>
+        <div class="theme-swatches">
+          <div class="swatch dark" data-action="set-theme" data-theme="dark" aria-label="Sombre"></div>
+          <div class="swatch light" data-action="set-theme" data-theme="light" aria-label="Clair"></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="eyebrow" data-i18n="language"></div>
+    <div class="settings-card">
+      <div class="settings-row">
+        <span class="label" data-i18n="app_language"></span>
+        <div class="lang-options">
+          <div class="lang-chip" data-action="set-lang" data-lang="fr">Français</div>
+          <div class="lang-chip" data-action="set-lang" data-lang="en">English</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================================================
+       Bottom navigation (Menu 1 & 3)
+       ============================================================ -->
+  <nav class="bottom-nav" id="bottom-nav">
+    <div class="bottom-nav-inner">
+      <button class="nav-btn side" data-action="go-schedule">2</button>
+      <button class="nav-btn center" data-action="logo-home" aria-label="Accueil">
+        <img src="assets/icons/logo.png" alt="Logo">
+      </button>
+      <button class="nav-btn side" data-action="go-settings">3</button>
+    </div>
+  </nav>
+
+  <!-- ============================================================
+       Overlay generique pour toutes les feuilles modales
+       ============================================================ -->
+  <div class="overlay" id="overlay">
+
+    <!-- Jour : liste des devoirs -->
+    <div class="sheet" data-sheet="day">
+      <div class="sheet-handle"></div>
+      <div class="sheet-header">
+        <div class="sheet-title" id="day-sheet-title">Lundi</div>
+        <button class="sheet-close" data-action="close-sheet">✕</button>
+      </div>
+      <div id="day-homework-list"></div>
+      <p class="hw-hint" data-i18n="hold_to_validate" style="margin:2px 4px 14px;"></p>
+      <div class="field">
+        <label data-i18n="new_homework"></label>
+        <input type="text" id="new-homework-input" maxlength="140" data-i18n-placeholder="new_homework_placeholder">
+      </div>
+      <div class="sheet-actions">
+        <button class="btn primary" data-action="save-homework" data-i18n="add"></button>
+      </div>
+    </div>
+
+    <!-- Thrive : ajout / édition -->
+    <div class="sheet" data-sheet="thrive">
+      <div class="sheet-handle"></div>
+      <div class="sheet-header">
+        <div class="sheet-title" data-i18n="thrive_sheet_title"></div>
+        <button class="sheet-close" data-action="close-sheet">✕</button>
+      </div>
+      <div class="field">
+        <label data-i18n="pick_day"></label>
+        <div class="day-select" id="thrive-day-select"></div>
+      </div>
+      <div class="field">
+        <label data-i18n="activity"></label>
+        <input type="text" id="thrive-input" maxlength="60" data-i18n-placeholder="activity_placeholder">
+      </div>
+      <div class="sheet-actions">
+        <button class="btn danger-ghost" id="thrive-delete-btn" data-action="delete-thrive" style="display:none;" data-i18n="delete"></button>
+        <button class="btn primary" data-action="save-thrive" data-i18n="save"></button>
+      </div>
+    </div>
+
+    <!-- Evaluation : ajout -->
+    <div class="sheet" data-sheet="eval">
+      <div class="sheet-handle"></div>
+      <div class="sheet-header">
+        <div class="sheet-title" data-i18n="new_eval"></div>
+        <button class="sheet-close" data-action="close-sheet">✕</button>
+      </div>
+      <div class="field">
+        <label data-i18n="subject"></label>
+        <input type="text" id="eval-subject-input" maxlength="40" data-i18n-placeholder="subject_placeholder">
+      </div>
+      <div class="field">
+        <label data-i18n="score_on_100"></label>
+        <input type="number" id="eval-score-input" min="0" max="100" placeholder="0–100">
+      </div>
+      <div class="sheet-actions">
+        <button class="btn primary" data-action="save-eval" data-i18n="add"></button>
+      </div>
+    </div>
+
+    <!-- Evaluation : liste complete -->
+    <div class="sheet" data-sheet="evals-all">
+      <div class="sheet-handle"></div>
+      <div class="sheet-header">
+        <div class="sheet-title" data-i18n="all_evals"></div>
+        <button class="sheet-close" data-action="close-sheet">✕</button>
+      </div>
+      <div id="evals-all-list"></div>
+    </div>
+
+    <!-- Note perso -->
+    <div class="sheet" data-sheet="note">
+      <div class="sheet-handle"></div>
+      <div class="sheet-header">
+        <div class="sheet-title" id="note-sheet-title" data-i18n="new_note"></div>
+        <button class="sheet-close" data-action="close-sheet">✕</button>
+      </div>
+      <div class="field">
+        <textarea id="note-input" maxlength="600" data-i18n-placeholder="note_placeholder"></textarea>
+      </div>
+      <div class="sheet-actions">
+        <button class="btn danger-ghost" id="note-delete-btn" data-action="delete-note" style="display:none;" data-i18n="delete"></button>
+        <button class="btn primary" data-action="save-note" data-i18n="save"></button>
+      </div>
+    </div>
+
+    <!-- Photo emploi du temps -->
+    <div class="sheet" data-sheet="photo">
+      <div class="sheet-handle"></div>
+      <div class="sheet-header">
+        <div class="sheet-title" id="photo-sheet-title">Semaine A</div>
+        <button class="sheet-close" data-action="close-sheet">✕</button>
+      </div>
+      <img class="photo-preview" id="photo-preview-img" alt="Emploi du temps">
+      <div class="sheet-actions">
+        <button class="btn danger-ghost" data-action="delete-photo" data-i18n="delete"></button>
+        <button class="btn primary" data-action="replace-photo" data-i18n="replace"></button>
+      </div>
+    </div>
+
+  </div>
+
+  <div class="toast" id="toast"></div>
+</div>
+
+<script src="js/i18n.js"></script>
+<script src="js/app.js"></script>
+</body>
+</html>
